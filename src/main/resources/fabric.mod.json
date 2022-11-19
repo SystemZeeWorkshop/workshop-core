@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "id": "workshop_core",
+  "version": "${version}",
+  "name": "Workshop Core",
+  "description": "The Best Minecraft Idea Wins!",
+  "authors": ["SystemZee", "SmellyModder"],
+  "contact": {
+    "homepage": "?",
+    "sources": "?"
+  },
+  "license": "ARR",
+  "icon": "assets/workshop_core/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "com.syszee.workshopcore.core.WorkshopCore"
+    ],
+    "client": [
+      "com.syszee.workshopcore.core.WorkshopCoreClient"
+    ]
+  },
+  "mixins": [
+    "workshop_core.mixins.json"
+  ],
+  "accessWidener": "workshop_core.accesswidener",
+  "depends": {
+    "fabricloader": ">=0.14.10",
+    "fabric-api": "*",
+    "minecraft": "~1.19",
+    "java": ">=17"
+  },
+  "suggests": {
+    "another-mod": "*"
+  }
+}
