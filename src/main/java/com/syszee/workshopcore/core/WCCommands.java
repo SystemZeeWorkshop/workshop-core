@@ -1,6 +1,7 @@
 package com.syszee.workshopcore.core;
 
 import com.mojang.brigadier.CommandDispatcher;
+import com.syszee.workshopcore.common.entity.Body;
 import com.syszee.workshopcore.common.entity.Coin;
 import net.minecraft.ChatFormatting;
 import net.minecraft.commands.CommandBuildContext;
@@ -10,6 +11,7 @@ import net.minecraft.commands.arguments.EntityArgument;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.List;
@@ -44,6 +46,37 @@ public final class WCCommands {
 						return performActionOnNearestCoin(context.getSource(), null, (coin, player) -> coin.reset());
 					})
 				)
+		);
+		dispatcher.register(
+				literal("bodies").requires(commandSourceStack -> commandSourceStack.hasPermission(2))
+						.then(
+								literal("on").executes(context -> {
+									WorkshopCore.bodiesEnabled = true;
+									context.getSource().sendSuccess(Component.literal("Enabled bodies"), true);
+									return 1;
+								})
+						)
+						.then(
+								literal("off").executes(context -> {
+									WorkshopCore.bodiesEnabled = false;
+									context.getSource().sendSuccess(Component.literal("Disabled bodies"), true);
+									return 1;
+								})
+						)
+						.then(
+								literal("clear").executes(context -> {
+									CommandSourceStack sourceStack = context.getSource();
+									int count = 0;
+									for (Entity entity : sourceStack.getLevel().getAllEntities()) {
+										if (entity instanceof Body) {
+											entity.kill();
+											count++;
+										}
+									}
+									sourceStack.sendSuccess(Component.literal("Removed " + count + " bodies"), true);
+									return count;
+								})
+						)
 		);
 	}
 

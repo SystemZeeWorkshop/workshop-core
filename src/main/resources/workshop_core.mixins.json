@@ -4,6 +4,7 @@
   "package": "com.syszee.workshopcore.core.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
+    "EntityMixin",
     "PlayerMixin"
   ],
   "client": [

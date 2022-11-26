@@ -1,6 +1,7 @@
 package com.syszee.workshopcore.core;
 
 import com.syszee.workshopcore.client.model.CoinModel;
+import com.syszee.workshopcore.client.render.BodyRenderer;
 import com.syszee.workshopcore.client.render.CoinRenderer;
 import com.syszee.workshopcore.core.registry.WCEntityTypes;
 import net.fabricmc.api.ClientModInitializer;
@@ -13,5 +14,6 @@ public final class WorkshopCoreClient implements ClientModInitializer {
 		EntityModelLayerRegistry.registerModelLayer(CoinModel.LAYER_LOCATION, CoinModel::createBodyLayer);
 
 		EntityRendererRegistry.register(WCEntityTypes.COIN, CoinRenderer::new);
+		EntityRendererRegistry.register(WCEntityTypes.BODY, BodyRenderer::new);
 	}
 }
