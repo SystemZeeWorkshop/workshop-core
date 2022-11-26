@@ -24,7 +24,7 @@ import net.minecraft.world.phys.AABB;
 import org.jetbrains.annotations.Nullable;
 
 public class Body extends Entity {
-	private static final EntityDataAccessor<LossyEntityCloningData> BODY_ENTITY_DATA = SynchedEntityData.defineId(Body.class, WCEntityDataSerializers.LOSSY_ENTITY_CLONE_DATA_SERIALIZER);
+	private static final EntityDataAccessor<LossyEntityCloningData> BODY_ENTITY_DATA = SynchedEntityData.defineId(Body.class, WCEntityDataSerializers.LOSSY_ENTITY_CLONING_DATA_SERIALIZER);
 	@Environment(EnvType.CLIENT)
 	@Nullable
 	private Entity entity;
@@ -75,14 +75,14 @@ public class Body extends Entity {
 	@Override
 	protected void readAdditionalSaveData(CompoundTag compoundTag) {
 		try {
-			this.setBodyEntityData(WCEntityDataSerializers.LOSSY_ENTITY_CLONE_DATA_SERIALIZER.read(new FriendlyByteBuf(Unpooled.wrappedBuffer(compoundTag.getByteArray("BodyData")))));
+			this.setBodyEntityData(WCEntityDataSerializers.LOSSY_ENTITY_CLONING_DATA_SERIALIZER.read(new FriendlyByteBuf(Unpooled.wrappedBuffer(compoundTag.getByteArray("BodyData")))));
 		} catch (Exception ignored) {}
 	}
 
 	@Override
 	protected void addAdditionalSaveData(CompoundTag compoundTag) {
 		FriendlyByteBuf friendlyByteBuf = new FriendlyByteBuf(Unpooled.buffer());
-		WCEntityDataSerializers.LOSSY_ENTITY_CLONE_DATA_SERIALIZER.write(friendlyByteBuf, this.getBodyEntityData());
+		WCEntityDataSerializers.LOSSY_ENTITY_CLONING_DATA_SERIALIZER.write(friendlyByteBuf, this.getBodyEntityData());
 		compoundTag.putByteArray("BodyData", friendlyByteBuf.array());
 	}
 

@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.UUID;
 
 public final class WCEntityDataSerializers {
-	public static final EntityDataSerializer<LossyEntityCloningData> LOSSY_ENTITY_CLONE_DATA_SERIALIZER = new EntityDataSerializer<LossyEntityCloningData>() {
+	public static final EntityDataSerializer<LossyEntityCloningData> LOSSY_ENTITY_CLONING_DATA_SERIALIZER = new EntityDataSerializer<LossyEntityCloningData>() {
 		@Override
 		public void write(FriendlyByteBuf friendlyByteBuf, LossyEntityCloningData lossyEntityCloneData) {
 			friendlyByteBuf.writeInt(lossyEntityCloneData.entityTypeID);
@@ -43,7 +43,7 @@ public final class WCEntityDataSerializers {
 	};
 
 	public static void register() {
-		EntityDataSerializers.registerSerializer(LOSSY_ENTITY_CLONE_DATA_SERIALIZER);
+		EntityDataSerializers.registerSerializer(LOSSY_ENTITY_CLONING_DATA_SERIALIZER);
 	}
 
 	public record LossyEntityCloningData(int entityTypeID, UUID uuid, Component name, float yHeadRot, float yBodyRot, List<SynchedEntityData.DataItem<?>> dataItems) {
