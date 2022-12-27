@@ -8,8 +8,10 @@
     "PlayerMixin"
   ],
   "client": [
-    "client.PlayerRendererMixin",
-    "client.LivingEntityRendererMixin"
+    "client.CameraMixin",
+    "client.LivingEntityRendererMixin",
+    "client.MinecraftMixin",
+    "client.PlayerRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1
