@@ -34,9 +34,9 @@ public class PlayerParticle extends SingleQuadParticle {
 			this.u0 = this.u1 + 0.0625F;
 			this.v0 = this.random.nextInt(16) * 4.0F / 64.0F;
 			this.v1 = this.v0 + 0.0625F;
+			this.quadSize /= 2.0F;
 		}
 		this.gravity = 1.0F;
-		this.quadSize /= 2.0F;
 		this.lifetime = 20 + this.random.nextInt(41);
 	}
 

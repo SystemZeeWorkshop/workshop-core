@@ -30,6 +30,7 @@ public class PlayerParticleOptions implements ParticleOptions {
 
 			String string = stringReader.getString().substring(i, stringReader.getCursor());
 			Optional<GameProfile> optional = WorkshopCore.server.getProfileCache().get(string);
+			stringReader.expect(' ');
 			return new PlayerParticleOptions(optional.orElseThrow(GameProfileArgument.ERROR_UNKNOWN_PLAYER::create), stringReader.readBoolean());
 		}
 
