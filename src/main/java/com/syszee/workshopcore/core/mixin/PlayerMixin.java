@@ -1,10 +1,12 @@
 package com.syszee.workshopcore.core.mixin;
 
 import com.syszee.workshopcore.core.WCPlayer;
+import com.syszee.workshopcore.core.WCServerPlayer;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.util.Mth;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -42,6 +44,13 @@ public abstract class PlayerMixin extends LivingEntity implements WCPlayer {
 				this.kill();
 				this.entityData.set(IS_SWELLING, false);
 			}
+		}
+	}
+
+	@Inject(method = "attack", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/player/Player;setLastHurtMob(Lnet/minecraft/world/entity/Entity;)V", ordinal = 0))
+	private void addSwellToAttackedEntity(Entity entity, CallbackInfo info) {
+		if (this instanceof WCServerPlayer wcServerPlayer && wcServerPlayer.isExplosivePunchEnabled() && entity instanceof WCPlayer target && this.getMainHandItem().isEmpty()) {
+			target.startSwelling();
 		}
 	}
 

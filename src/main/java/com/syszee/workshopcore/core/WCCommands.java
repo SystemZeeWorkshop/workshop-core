@@ -1,6 +1,7 @@
 package com.syszee.workshopcore.core;
 
 import com.mojang.brigadier.CommandDispatcher;
+import com.mojang.brigadier.arguments.BoolArgumentType;
 import com.syszee.workshopcore.common.entity.Body;
 import com.syszee.workshopcore.common.entity.Coin;
 import net.minecraft.ChatFormatting;
@@ -17,6 +18,7 @@ import net.minecraft.world.phys.Vec3;
 import java.util.List;
 import java.util.function.BiConsumer;
 
+import static net.minecraft.commands.Commands.argument;
 import static net.minecraft.commands.Commands.literal;
 
 public final class WCCommands {
@@ -47,6 +49,7 @@ public final class WCCommands {
 					})
 				)
 		);
+
 		dispatcher.register(
 				literal("bodies").requires(commandSourceStack -> commandSourceStack.hasPermission(2))
 						.then(
@@ -76,6 +79,22 @@ public final class WCCommands {
 									sourceStack.sendSuccess(Component.literal("Removed " + count + " bodies"), true);
 									return count;
 								})
+						)
+		);
+
+		dispatcher.register(
+				literal("explosivepunch").requires(commandSourceStack -> commandSourceStack.hasPermission(2))
+						.then(
+								argument("players", EntityArgument.players())
+										.then(
+												argument("enable", BoolArgumentType.bool()).executes(context -> {
+													boolean enable = BoolArgumentType.getBool(context, "enable");
+													var players = EntityArgument.getPlayers(context, "players");
+													players.forEach(serverPlayer -> ((WCServerPlayer) serverPlayer).enableExplosivePunch(enable));
+													context.getSource().sendSuccess(Component.literal("Updated Explosive Punch for " + players.size() + " players"), true);
+													return players.size();
+												})
+										)
 						)
 		);
 	}
