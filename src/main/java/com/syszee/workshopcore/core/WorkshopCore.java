@@ -3,6 +3,7 @@ package com.syszee.workshopcore.core;
 import com.syszee.workshopcore.core.networking.WCNetworking;
 import com.syszee.workshopcore.core.registry.WCEntityDataSerializers;
 import com.syszee.workshopcore.core.registry.WCEntityTypes;
+import com.syszee.workshopcore.core.registry.WCGameRules;
 import com.syszee.workshopcore.core.registry.WCParticleTypes;
 import com.syszee.workshopcore.core.screenshake.ScreenShakeSourceSerializers;
 import com.syszee.workshopcore.core.screenshake.distribution.ShakeDistributorSerializers;
@@ -20,6 +21,7 @@ public class WorkshopCore implements ModInitializer {
 	public void onInitialize() {
 		WCEntityDataSerializers.register();
 		WCEntityTypes.register();
+		WCGameRules.register();
 		WCParticleTypes.register();
 		ShakeDistributorSerializers.register();
 		ScreenShakeSourceSerializers.register();

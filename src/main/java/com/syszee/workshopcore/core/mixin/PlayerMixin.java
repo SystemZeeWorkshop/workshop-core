@@ -2,6 +2,7 @@ package com.syszee.workshopcore.core.mixin;
 
 import com.syszee.workshopcore.core.WCPlayer;
 import com.syszee.workshopcore.core.WCServerPlayer;
+import com.syszee.workshopcore.core.registry.WCGameRules;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -11,7 +12,6 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Explosion;
-import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -39,7 +39,7 @@ public abstract class PlayerMixin extends LivingEntity implements WCPlayer {
 		this.oldSwell = this.swell;
 		if (this.entityData.get(IS_SWELLING)) {
 			if (++this.swell >= 30 && !this.level.isClientSide) {
-				Explosion.BlockInteraction blockInteraction = this.level.getGameRules().getBoolean(GameRules.RULE_MOBGRIEFING) ? Explosion.BlockInteraction.DESTROY : Explosion.BlockInteraction.NONE;
+				Explosion.BlockInteraction blockInteraction = this.level.getGameRules().getBoolean(WCGameRules.RULE_SWELL_GRIEFING) ? Explosion.BlockInteraction.DESTROY : Explosion.BlockInteraction.NONE;
 				this.level.explode(this, this.getX(), this.getY(), this.getZ(), 3.0F, blockInteraction);
 				this.kill();
 				this.entityData.set(IS_SWELLING, false);
