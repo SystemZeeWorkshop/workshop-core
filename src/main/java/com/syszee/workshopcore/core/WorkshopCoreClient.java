@@ -1,5 +1,6 @@
 package com.syszee.workshopcore.core;
 
+import com.syszee.workshopcore.client.WCOptions;
 import com.syszee.workshopcore.client.model.CoinModel;
 import com.syszee.workshopcore.client.render.BodyRenderer;
 import com.syszee.workshopcore.client.render.CoinRenderer;
@@ -20,5 +21,6 @@ public final class WorkshopCoreClient implements ClientModInitializer {
 
 		WCParticleTypes.registerFactories();
 		WCNetworking.client();
+		WCOptions.register();
 	}
 }

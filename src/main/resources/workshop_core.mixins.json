@@ -8,10 +8,13 @@
     "PlayerMixin"
   ],
   "client": [
+    "client.AccessibilityOptionsScreenMixin",
     "client.CameraMixin",
     "client.LivingEntityRendererMixin",
     "client.MinecraftMixin",
-    "client.PlayerRendererMixin"
+    "client.OptionsMixin",
+    "client.PlayerRendererMixin",
+    "client.VideoSettingsScreenMixin"
   ],
   "injectors": {
     "defaultRequire": 1

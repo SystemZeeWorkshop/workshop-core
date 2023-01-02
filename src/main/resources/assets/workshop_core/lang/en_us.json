@@ -1,4 +1,6 @@
 {
   "entity.workshop_core.coin": "Coin",
-  "entity.workshop_core.body": "Body"
+  "entity.workshop_core.body": "Body",
+  "workshop_core.options.screenShakeScale": "Screen Shake Scale",
+  "workshop_core.options.screenShakeScale.tooltip": "Strength of screen shaking effects."
 }

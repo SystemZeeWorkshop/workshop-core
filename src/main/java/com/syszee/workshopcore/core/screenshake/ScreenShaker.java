@@ -1,5 +1,6 @@
 package com.syszee.workshopcore.core.screenshake;
 
+import com.syszee.workshopcore.client.WCOptions;
 import com.syszee.workshopcore.core.math.Vector2f;
 import net.minecraft.client.Camera;
 
@@ -25,7 +26,10 @@ public final class ScreenShaker {
 
 	public static Vector2f getShake(Camera camera, float partialTicks) {
 		SHAKE_INTENSITY.set(0.0F, 0.0F);
+		double screenShakeScale = WCOptions.SCREEN_SHAKE_SCALE.get();
+		if (screenShakeScale <= 0.0D) return SHAKE_INTENSITY;
 		for (ScreenShakeSource source : SCREEN_SHAKE_SOURCES) source.modifyShake(SHAKE_INTENSITY, camera, partialTicks);
+		SHAKE_INTENSITY.mul((float) screenShakeScale);
 		return SHAKE_INTENSITY;
 	}
 }
