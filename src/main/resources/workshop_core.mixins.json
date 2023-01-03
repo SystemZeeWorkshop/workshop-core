@@ -6,14 +6,18 @@
   "mixins": [
     "EntityMixin",
     "EntitySelectorOptionsMixin",
+    "LivingEntityMixin",
     "PlayerMixin",
+    "ServerGamePacketListenerImplMixin",
     "ServerPlayerMixin"
   ],
   "client": [
     "client.AccessibilityOptionsScreenMixin",
     "client.CameraMixin",
     "client.LivingEntityRendererMixin",
+    "client.LocalPlayerMixin",
     "client.MinecraftMixin",
+    "client.MultiPlayerGameModeMixin",
     "client.OptionsMixin",
     "client.PlayerRendererMixin",
     "client.VideoSettingsScreenMixin"

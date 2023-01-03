@@ -6,6 +6,10 @@ public interface WCPlayer {
 	Component HEADS_COMPONENT = Component.literal("Heads");
 	Component TAILS_COMPONENT = Component.literal("Tails");
 
+	void setFrozen(boolean frozen);
+
+	boolean isFrozen();
+
 	void startSwelling();
 
 	float getSwelling(float partialTicks);

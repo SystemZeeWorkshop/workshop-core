@@ -97,6 +97,22 @@ public final class WCCommands {
 										)
 						)
 		);
+
+		dispatcher.register(
+				literal("freeze").requires(commandSourceStack -> commandSourceStack.hasPermission(2))
+						.then(
+								argument("players", EntityArgument.players())
+										.then(
+												argument("enable", BoolArgumentType.bool()).executes(context -> {
+													boolean enable = BoolArgumentType.getBool(context, "enable");
+													var players = EntityArgument.getPlayers(context, "players");
+													players.forEach(serverPlayer -> ((WCPlayer) serverPlayer).setFrozen(enable));
+													context.getSource().sendSuccess(Component.literal("Updated Freeze for " + players.size() + " players"), true);
+													return players.size();
+												})
+										)
+						)
+		);
 	}
 
 	private static int performActionOnNearestCoin(CommandSourceStack sourceStack, ServerPlayer player, BiConsumer<Coin, ServerPlayer> consumer) {

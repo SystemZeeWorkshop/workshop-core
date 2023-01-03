@@ -1,5 +1,6 @@
 package com.syszee.workshopcore.core.mixin;
 
+import com.syszee.workshopcore.core.WCPlayer;
 import com.syszee.workshopcore.core.WCServerPlayer;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
@@ -15,16 +16,19 @@ public final class ServerPlayerMixin implements WCServerPlayer {
 	@Inject(method = "restoreFrom", at = @At("RETURN"))
 	private void restoreWCDataFrom(ServerPlayer oldPlayer, boolean bl, CallbackInfo info) {
 		this.explosivePunchEnabled = ((WCServerPlayer) oldPlayer).isExplosivePunchEnabled();
+		((WCPlayer) (Object) this).setFrozen(((WCPlayer) oldPlayer).isFrozen());
 	}
 
 	@Inject(method = "addAdditionalSaveData", at = @At("RETURN"))
 	private void addWCSaveData(CompoundTag compoundTag, CallbackInfo info) {
 		compoundTag.putBoolean("ExplosivePunchEnabled", this.explosivePunchEnabled);
+		compoundTag.putBoolean("IsFrozen", ((WCPlayer) (Object) this).isFrozen());
 	}
 
 	@Inject(method = "readAdditionalSaveData", at = @At("RETURN"))
 	private void readWCSaveData(CompoundTag compoundTag, CallbackInfo info) {
 		this.explosivePunchEnabled = compoundTag.getBoolean("ExplosivePunchEnabled");
+		((WCPlayer) (Object) this).setFrozen(compoundTag.getBoolean("IsFrozen"));
 	}
 
 	@Override
