@@ -4,5 +4,6 @@
   "workshop_core.options.screenShakeScale": "Screen Shake Scale",
   "workshop_core.options.screenShakeScale.tooltip": "Strength of screen shaking effects.",
   "gamerule.workshop_core.swellGriefing": "Allow destruction from swelling",
+  "gamerule.workshop_core.doDeathConfetti": "Allow confetti to spawn upon death of an entity",
   "argument.entity.options.op.description": "Filters players that are operators or not"
 }
