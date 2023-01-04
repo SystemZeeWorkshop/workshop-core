@@ -166,14 +166,19 @@ public class Coin extends Entity {
 	}
 
 	public void reset() {
+		Scoreboard scoreboard = this.level.getScoreboard();
 		ServerPlayer heads = this.heads;
 		if (heads != null) {
 			((WCPlayer) heads).setCoinChoice(WCPlayer.CoinChoice.UNDEFINED);
+			Team team = heads.getTeam();
+			if (team == this.winners || team == this.losers) scoreboard.removePlayerFromTeam(heads.getScoreboardName());
 			heads.setGlowingTag(false);
 		}
 		ServerPlayer tails = this.tails;
 		if (tails != null) {
 			((WCPlayer) tails).setCoinChoice(WCPlayer.CoinChoice.UNDEFINED);
+			Team team = tails.getTeam();
+			if (team == this.winners || team == this.losers) scoreboard.removePlayerFromTeam(tails.getScoreboardName());
 			tails.setGlowingTag(false);
 		}
 		this.heads = null;
