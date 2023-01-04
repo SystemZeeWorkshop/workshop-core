@@ -137,11 +137,13 @@ public class Coin extends Entity {
 				if (heads != null) {
 					Team team = heads.getTeam();
 					if (team == this.winners || team == this.losers) scoreboard.removePlayerFromTeam(heads.getScoreboardName());
+					heads.setGlowingTag(false);
 				}
 				ServerPlayer tails = this.tails;
 				if (tails != null) {
 					Team team = tails.getTeam();
 					if (team == this.winners || team == this.losers) scoreboard.removePlayerFromTeam(tails.getScoreboardName());
+					tails.setGlowingTag(false);
 				}
 				this.flippingTimer = 60;
 				return InteractionResult.CONSUME;
@@ -167,10 +169,12 @@ public class Coin extends Entity {
 		ServerPlayer heads = this.heads;
 		if (heads != null) {
 			((WCPlayer) heads).setCoinChoice(WCPlayer.CoinChoice.UNDEFINED);
+			heads.setGlowingTag(false);
 		}
 		ServerPlayer tails = this.tails;
 		if (tails != null) {
 			((WCPlayer) tails).setCoinChoice(WCPlayer.CoinChoice.UNDEFINED);
+			tails.setGlowingTag(false);
 		}
 		this.heads = null;
 		this.tails = null;
