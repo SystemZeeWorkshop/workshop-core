@@ -51,9 +51,6 @@ public abstract class PlayerMixin extends LivingEntity implements WCPlayer {
 				this.entityData.set(IS_SWELLING, false);
 			}
 		}
-		if (!this.level.isClientSide && this.isFrozen()) {
-			this.setTicksFrozen(140);
-		}
 	}
 
 	@Inject(method = "attack", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/player/Player;setLastHurtMob(Lnet/minecraft/world/entity/Entity;)V", ordinal = 0))
