@@ -23,7 +23,12 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Collections;
+import java.util.Set;
+import java.util.WeakHashMap;
+
 public class Body extends Entity {
+	private static final Set<Entity> ALL_CLIENT_BODIES = Collections.newSetFromMap(new WeakHashMap<>());
 	private static final EntityDataAccessor<LossyEntityCloningData> BODY_ENTITY_DATA = SynchedEntityData.defineId(Body.class, WCEntityDataSerializers.LOSSY_ENTITY_CLONING_DATA_SERIALIZER);
 	@Environment(EnvType.CLIENT)
 	@Nullable
@@ -43,6 +48,10 @@ public class Body extends Entity {
 		return new Body(entity);
 	}
 
+	public static boolean isClientBody(Entity entity) {
+		return ALL_CLIENT_BODIES.contains(entity);
+	}
+
 	@Override
 	protected void defineSynchedData() {
 		this.entityData.define(BODY_ENTITY_DATA, LossyEntityCloningData.DEFAULT);
@@ -53,7 +62,10 @@ public class Body extends Entity {
 		super.onSyncedDataUpdated(entityDataAccessor);
 		if (BODY_ENTITY_DATA.equals(entityDataAccessor) && this.level.isClientSide) {
 			Entity entity = this.getBodyEntityData().createClientEntity((ClientLevel) this.level);
-			if (entity != null) entity.setPos(this.position());
+			if (entity != null) {
+				entity.setPos(this.position());
+				ALL_CLIENT_BODIES.add(entity);
+			}
 			this.entity = entity;
 		}
 	}
