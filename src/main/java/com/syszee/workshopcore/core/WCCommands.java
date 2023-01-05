@@ -2,6 +2,7 @@ package com.syszee.workshopcore.core;
 
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.BoolArgumentType;
+import com.mojang.brigadier.arguments.StringArgumentType;
 import com.syszee.workshopcore.common.entity.Body;
 import com.syszee.workshopcore.common.entity.Coin;
 import net.minecraft.ChatFormatting;
@@ -113,6 +114,24 @@ public final class WCCommands {
 										)
 						)
 		);
+
+		dispatcher.register(
+				literal("popup").requires(commandSourceStack -> commandSourceStack.hasPermission(2)).then(
+						argument("entity", EntityArgument.entity()).then(
+								literal("remove").executes(context -> {
+									Entity entity = EntityArgument.getEntity(context, "entity");
+									((WCEntity) entity).setPopupInfo(null);
+									context.getSource().sendSuccess(Component.literal("Removed popup on ").append(entity.getDisplayName()), true);
+									return 1;
+								})
+						).then(argument("title", StringArgumentType.string()).then(argument("description", StringArgumentType.string()).executes(context -> {
+							Entity entity = EntityArgument.getEntity(context, "entity");
+							((WCEntity) entity).setPopupInfo(new WCEntity.PopupInfo(componentFromString(StringArgumentType.getString(context, "title")), componentFromString(StringArgumentType.getString(context, "description"))));
+							context.getSource().sendSuccess(Component.literal("Assigned popup on ").append(entity.getDisplayName()), true);
+							return 1;
+						})))
+				)
+		);
 	}
 
 	private static int performActionOnNearestCoin(CommandSourceStack sourceStack, ServerPlayer player, BiConsumer<Coin, ServerPlayer> consumer) {
@@ -138,4 +157,13 @@ public final class WCCommands {
 		return 0;
 	}
 
+	// Vanilla's component argument is greedy, so we need this for multiple component arguments
+	private static Component componentFromString(String string) {
+		try {
+			Component component = Component.Serializer.fromJson(string);
+			return component == null ? Component.literal(string) : component;
+		} catch (Exception exception) {
+			return Component.literal(string);
+		}
+	}
 }

@@ -1,11 +1,14 @@
 package com.syszee.workshopcore.core.mixin;
 
-import com.syszee.workshopcore.core.WCPlayer;
-import com.syszee.workshopcore.core.WCServerPlayer;
+import com.syszee.workshopcore.common.entity.EntityPopup;
+import com.syszee.workshopcore.core.*;
+import com.syszee.workshopcore.core.networking.WCNetworking;
 import com.syszee.workshopcore.core.registry.WCGameRules;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -61,8 +64,14 @@ public abstract class PlayerMixin extends LivingEntity implements WCPlayer {
 	}
 
 	@Inject(method = "interactOn", at = @At("HEAD"), cancellable = true)
-	private void preventInteractOnWhenFrozen(Entity entity, InteractionHand interactionHand, CallbackInfoReturnable<InteractionResult> info) {
+	private void interactOn(Entity entity, InteractionHand interactionHand, CallbackInfoReturnable<InteractionResult> info) {
 		if (this.isFrozen()) info.setReturnValue(InteractionResult.FAIL);
+		if (this.level instanceof ServerLevel serverLevel && serverLevel.getGameRules().getBoolean(WCGameRules.RULE_SHOW_INFO_POPUPS)) {
+			WCEntity.PopupInfo popupInfo = ((WCEntity) entity).getPopupInfo();
+			if (popupInfo != null && (Object) this instanceof ServerPlayer serverPlayer) {
+				serverPlayer.connection.send(WCNetworking.createS2CUpdateEntityPopup(new EntityPopup(entity, popupInfo.title(), popupInfo.description())));
+			}
+		}
 	}
 
 	@Inject(method = "attack", at = @At("HEAD"), cancellable = true)
