@@ -1,9 +1,11 @@
 package com.syszee.workshopcore.core.mixin;
 
 import com.syszee.workshopcore.common.entity.Body;
+import com.syszee.workshopcore.common.entity.EntityPopup;
 import com.syszee.workshopcore.core.WCEntity;
 import com.syszee.workshopcore.core.WCPlayer;
 import com.syszee.workshopcore.core.WorkshopCore;
+import com.syszee.workshopcore.core.WorkshopCoreClient;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.Entity;
@@ -55,6 +57,14 @@ public final class EntityMixin implements WCEntity {
 	@ModifyVariable(method = "move", at = @At("HEAD"), argsOnly = true, ordinal = 0)
 	private Vec3 frozenMovement(Vec3 vec3) {
 		return ((Object) this) instanceof WCPlayer wcPlayer && wcPlayer.isFrozen() ? Vec3.ZERO : vec3;
+	}
+
+	@Inject(method = "getTeamColor", at = @At("HEAD"), cancellable = true)
+	public void alterTeamColor(CallbackInfoReturnable<Integer> info) {
+		if (this.level.isClientSide) {
+			EntityPopup popup = WorkshopCoreClient.entityPopup;
+			if (popup != null && popup.entity() == (Object) this) info.setReturnValue(16765696);
+		}
 	}
 
 	@Override
