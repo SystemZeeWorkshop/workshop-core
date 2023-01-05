@@ -19,8 +19,7 @@
     "client.MinecraftMixin",
     "client.MultiPlayerGameModeMixin",
     "client.OptionsMixin",
-    "client.PlayerRendererMixin",
-    "client.VideoSettingsScreenMixin"
+    "client.PlayerRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1
