@@ -63,7 +63,7 @@ public final class EntityMixin implements WCEntity {
 	public void alterTeamColor(CallbackInfoReturnable<Integer> info) {
 		if (this.level.isClientSide) {
 			EntityPopup popup = WorkshopCoreClient.entityPopup;
-			if (popup != null && popup.entity() == (Object) this) info.setReturnValue(16765696);
+			if (popup != null && popup.entity() == (Object) this) info.setReturnValue(16755200);
 		}
 	}
 
