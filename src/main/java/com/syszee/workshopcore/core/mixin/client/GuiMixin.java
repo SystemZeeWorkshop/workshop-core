@@ -7,6 +7,7 @@ import com.syszee.workshopcore.core.WorkshopCoreClient;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.Gui;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.network.chat.Component;
@@ -32,7 +33,7 @@ public final class GuiMixin {
 	private int screenHeight;
 
 	@Inject(method = "render", at = @At(value = "FIELD", opcode = Opcodes.GETFIELD, target = "Lnet/minecraft/client/Options;hideGui:Z", ordinal = 1))
-	private void renderPopups(PoseStack poseStack, float f, CallbackInfo info) {
+	private void renderPopups(GuiGraphics guiGraphics, float f, CallbackInfo info) {
 		var entityPopup = WorkshopCoreClient.entityPopup;
 		if (entityPopup != null) {
 			Entity crosshairPickEntity = Minecraft.getInstance().crosshairPickEntity;
@@ -55,6 +56,7 @@ public final class GuiMixin {
 				BufferBuilder bufferBuilder = tesselator.getBuilder();
 				RenderSystem.setShader(GameRenderer::getPositionColorShader);
 				bufferBuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_COLOR);
+				var poseStack = guiGraphics.pose();
 				Matrix4f matrix4f = poseStack.last().pose();
 				int outlineStartColor = 1347420415;
 				int outlineEndColor = 1344798847;

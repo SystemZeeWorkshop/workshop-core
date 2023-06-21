@@ -46,9 +46,9 @@ public abstract class PlayerMixin extends LivingEntity implements WCPlayer {
 	private void tick(CallbackInfo info) {
 		this.oldSwell = this.swell;
 		if (this.entityData.get(IS_SWELLING)) {
-			if (++this.swell >= 30 && !this.level.isClientSide) {
-				Level.ExplosionInteraction blockInteraction = this.level.getGameRules().getBoolean(WCGameRules.RULE_SWELL_GRIEFING) ? Level.ExplosionInteraction.MOB : Level.ExplosionInteraction.NONE;
-				this.level.explode(this, this.getX(), this.getY(), this.getZ(), 3.0F, blockInteraction);
+			if (++this.swell >= 30 && !this.level().isClientSide) {
+				Level.ExplosionInteraction blockInteraction = this.level().getGameRules().getBoolean(WCGameRules.RULE_SWELL_GRIEFING) ? Level.ExplosionInteraction.MOB : Level.ExplosionInteraction.NONE;
+				this.level().explode(this, this.getX(), this.getY(), this.getZ(), 3.0F, blockInteraction);
 				this.kill();
 				this.entityData.set(IS_SWELLING, false);
 			}
@@ -65,7 +65,7 @@ public abstract class PlayerMixin extends LivingEntity implements WCPlayer {
 	@Inject(method = "interactOn", at = @At("HEAD"), cancellable = true)
 	private void interactOn(Entity entity, InteractionHand interactionHand, CallbackInfoReturnable<InteractionResult> info) {
 		if (this.isFrozen()) info.setReturnValue(InteractionResult.FAIL);
-		if (this.level instanceof ServerLevel serverLevel && serverLevel.getGameRules().getBoolean(WCGameRules.RULE_SHOW_INFO_POPUPS)) {
+		if (this.level() instanceof ServerLevel serverLevel && serverLevel.getGameRules().getBoolean(WCGameRules.RULE_SHOW_INFO_POPUPS)) {
 			WCEntity.PopupInfo popupInfo = ((WCEntity) entity).getPopupInfo();
 			if (popupInfo != null && (Object) this instanceof ServerPlayer serverPlayer) {
 				serverPlayer.connection.send(WCNetworking.createS2CUpdateEntityPopup(new EntityPopup(entity, popupInfo.title(), popupInfo.description())));

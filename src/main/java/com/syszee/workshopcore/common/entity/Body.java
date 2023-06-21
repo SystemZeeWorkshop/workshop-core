@@ -37,9 +37,9 @@ public class Body extends Entity {
 	}
 
 	private Body(LivingEntity entity) {
-		super(WCEntityTypes.BODY, entity.level);
+		super(WCEntityTypes.BODY, entity.level());
 		this.setPos(entity.position());
-		this.setBodyEntityData(new LossyEntityCloningData(entity.level.registryAccess().registryOrThrow(Registries.ENTITY_TYPE).getId(entity.getType()), entity.getUUID(), entity.hasCustomName() || entity instanceof Player ? entity.getName() : Component.empty(), entity.yHeadRot, entity.yBodyRot, entity.getEntityData().getNonDefaultValues()));
+		this.setBodyEntityData(new LossyEntityCloningData(entity.level().registryAccess().registryOrThrow(Registries.ENTITY_TYPE).getId(entity.getType()), entity.getUUID(), entity.hasCustomName() || entity instanceof Player ? entity.getName() : Component.empty(), entity.yHeadRot, entity.yBodyRot, entity.getEntityData().getNonDefaultValues()));
 	}
 
 	public static Body of(LivingEntity entity) {
@@ -58,8 +58,8 @@ public class Body extends Entity {
 	@Override
 	public void onSyncedDataUpdated(EntityDataAccessor<?> entityDataAccessor) {
 		super.onSyncedDataUpdated(entityDataAccessor);
-		if (BODY_ENTITY_DATA.equals(entityDataAccessor) && this.level.isClientSide) {
-			Entity entity = this.getBodyEntityData().createClientEntity((ClientLevel) this.level);
+		if (BODY_ENTITY_DATA.equals(entityDataAccessor) && this.level().isClientSide) {
+			Entity entity = this.getBodyEntityData().createClientEntity((ClientLevel) this.level());
 			if (entity != null) {
 				entity.setPos(this.position());
 				ALL_CLIENT_BODIES.add(entity);
@@ -71,7 +71,7 @@ public class Body extends Entity {
 	@Override
 	public void tick() {
 		super.tick();
-		if (this.level.isClientSide) {
+		if (this.level().isClientSide) {
 			Entity entity = this.entity;
 			if (entity != null) {
 				entity.xo = entity.getX();

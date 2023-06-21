@@ -29,7 +29,7 @@ public abstract class LivingEntityMixin extends Entity {
 
 	@Inject(method = "die", at = @At("TAIL"))
 	private void die(DamageSource damageSource, CallbackInfo info) {
-		if (this.level instanceof ServerLevel serverLevel && serverLevel.getGameRules().getBoolean(WCGameRules.RULE_DO_DEATH_CONFETTI)) {
+		if (this.level() instanceof ServerLevel serverLevel && serverLevel.getGameRules().getBoolean(WCGameRules.RULE_DO_DEATH_CONFETTI)) {
 			serverLevel.sendParticles(WCParticleTypes.CONFETTI, this.getX(), this.getY(), this.getZ(), this.random.nextInt(90, 120), 0.0D, 0.0D, 0.0D, 1.0D);
 		}
 	}

@@ -56,14 +56,14 @@ public final class WCCommands {
 						.then(
 								literal("on").executes(context -> {
 									WorkshopCore.bodiesEnabled = true;
-									context.getSource().sendSuccess(Component.literal("Enabled bodies"), true);
+									context.getSource().sendSuccess(() -> Component.literal("Enabled bodies"), true);
 									return 1;
 								})
 						)
 						.then(
 								literal("off").executes(context -> {
 									WorkshopCore.bodiesEnabled = false;
-									context.getSource().sendSuccess(Component.literal("Disabled bodies"), true);
+									context.getSource().sendSuccess(() -> Component.literal("Disabled bodies"), true);
 									return 1;
 								})
 						)
@@ -77,7 +77,8 @@ public final class WCCommands {
 											count++;
 										}
 									}
-									sourceStack.sendSuccess(Component.literal("Removed " + count + " bodies"), true);
+									int finalCount = count;
+									sourceStack.sendSuccess(() -> Component.literal("Removed " + finalCount + " bodies"), true);
 									return count;
 								})
 						)
@@ -92,7 +93,7 @@ public final class WCCommands {
 													boolean enable = BoolArgumentType.getBool(context, "enable");
 													var players = EntityArgument.getPlayers(context, "players");
 													players.forEach(serverPlayer -> ((WCServerPlayer) serverPlayer).enableExplosivePunch(enable));
-													context.getSource().sendSuccess(Component.literal("Updated Explosive Punch for " + players.size() + " players"), true);
+													context.getSource().sendSuccess(() -> Component.literal("Updated Explosive Punch for " + players.size() + " players"), true);
 													return players.size();
 												})
 										)
@@ -108,7 +109,7 @@ public final class WCCommands {
 													boolean enable = BoolArgumentType.getBool(context, "enable");
 													var players = EntityArgument.getPlayers(context, "players");
 													players.forEach(serverPlayer -> ((WCPlayer) serverPlayer).setFrozen(enable));
-													context.getSource().sendSuccess(Component.literal("Updated Freeze for " + players.size() + " players"), true);
+													context.getSource().sendSuccess(() -> Component.literal("Updated Freeze for " + players.size() + " players"), true);
 													return players.size();
 												})
 										)
@@ -121,13 +122,13 @@ public final class WCCommands {
 								literal("remove").executes(context -> {
 									Entity entity = EntityArgument.getEntity(context, "entity");
 									((WCEntity) entity).setPopupInfo(null);
-									context.getSource().sendSuccess(Component.literal("Removed popup on ").append(entity.getDisplayName()), true);
+									context.getSource().sendSuccess(() -> Component.literal("Removed popup on ").append(entity.getDisplayName()), true);
 									return 1;
 								})
 						).then(argument("title", StringArgumentType.string()).then(argument("description", StringArgumentType.string()).executes(context -> {
 							Entity entity = EntityArgument.getEntity(context, "entity");
 							((WCEntity) entity).setPopupInfo(new WCEntity.PopupInfo(componentFromString(StringArgumentType.getString(context, "title")), componentFromString(StringArgumentType.getString(context, "description"))));
-							context.getSource().sendSuccess(Component.literal("Assigned popup on ").append(entity.getDisplayName()), true);
+							context.getSource().sendSuccess(() -> Component.literal("Assigned popup on ").append(entity.getDisplayName()), true);
 							return 1;
 						})))
 				)
@@ -151,7 +152,8 @@ public final class WCCommands {
 		}
 		if (nearestCoin != null) {
 			consumer.accept(nearestCoin, player);
-			sourceStack.sendSuccess(Component.literal("Successfully performed command on coin at " + nearestCoin.position().toString()).withStyle(ChatFormatting.BOLD), true);
+			String position = nearestCoin.position().toString();
+			sourceStack.sendSuccess(() -> Component.literal("Successfully performed command on coin at " + position).withStyle(ChatFormatting.BOLD), true);
 			return 1;
 		}
 		return 0;

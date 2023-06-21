@@ -47,7 +47,7 @@ public class PositionedScreenShakeSource extends DecayingScreenShakeSource {
 	@Override
 	protected Vector2f getShake(Camera camera, float partialTicks) {
 		var cameraEntity = camera.getEntity();
-		if (cameraEntity == null || !cameraEntity.level.dimension().equals(this.dimension)) return ShakeDistributor.SHAKE_VECTOR_CACHE.set(0.0F, 0.0F);
+		if (cameraEntity == null || !cameraEntity.level().dimension().equals(this.dimension)) return ShakeDistributor.SHAKE_VECTOR_CACHE.set(0.0F, 0.0F);
 		double x = Mth.lerp(partialTicks, this.xo, this.x);
 		double y = Mth.lerp(partialTicks, this.yo, this.y);
 		double z = Mth.lerp(partialTicks, this.zo, this.z);

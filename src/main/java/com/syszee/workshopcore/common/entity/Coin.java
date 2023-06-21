@@ -68,7 +68,7 @@ public class Coin extends Entity {
 	@Override
 	public void tick() {
 		super.tick();
-		if (!this.level.isClientSide) {
+		if (!this.level().isClientSide) {
 			if (this.flippingTimer > 0) {
 				if (--this.flippingTimer == 0) {
 					ServerPlayer winner;
@@ -80,7 +80,7 @@ public class Coin extends Entity {
 						winner = this.tails;
 						loser = this.heads;
 					}
-					Scoreboard scoreboard = this.level.getScoreboard();
+					Scoreboard scoreboard = this.level().getScoreboard();
 					if (winner != null) {
 						winner.setGlowingTag(true);
 						String winnerName = winner.getScoreboardName();
@@ -130,7 +130,7 @@ public class Coin extends Entity {
 		if (!this.isFlipping()) {
 			if (player instanceof ServerPlayer serverPlayer && serverPlayer.getServer().getProfilePermissions(serverPlayer.getGameProfile()) >= 2) {
 				this.flip();
-				Scoreboard scoreboard = this.level.getScoreboard();
+				Scoreboard scoreboard = this.level().getScoreboard();
 				ServerPlayer heads = this.heads;
 				if (heads != null) {
 					Team team = heads.getTeam();
@@ -164,7 +164,7 @@ public class Coin extends Entity {
 	}
 
 	public void reset() {
-		Scoreboard scoreboard = this.level.getScoreboard();
+		Scoreboard scoreboard = this.level().getScoreboard();
 		ServerPlayer heads = this.heads;
 		if (heads != null) {
 			((WCPlayer) heads).setCoinChoice(WCPlayer.CoinChoice.UNDEFINED);
