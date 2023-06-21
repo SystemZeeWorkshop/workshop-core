@@ -2,11 +2,11 @@ package com.syszee.workshopcore.core.screenshake;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import com.syszee.workshopcore.core.math.Vector2f;
 import com.syszee.workshopcore.core.screenshake.distribution.JitterShakeDistributor;
 import com.syszee.workshopcore.core.screenshake.distribution.ShakeDistributor;
 import net.minecraft.client.Camera;
 import net.minecraft.util.Mth;
+import org.joml.Vector2f;
 
 // Fields are protected and mutable in case of future use
 public class DecayingScreenShakeSource implements ScreenShakeSource {

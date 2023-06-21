@@ -1,11 +1,11 @@
 package com.syszee.workshopcore.core.mixin.client;
 
-import com.syszee.workshopcore.core.math.Vector2f;
 import com.syszee.workshopcore.core.screenshake.ScreenShaker;
 import net.minecraft.client.Camera;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.BlockGetter;
+import org.joml.Vector2f;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;

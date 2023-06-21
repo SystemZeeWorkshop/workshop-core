@@ -2,7 +2,6 @@ package com.syszee.workshopcore.core.mixin.client;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
-import com.mojang.math.Matrix4f;
 import com.syszee.workshopcore.core.WorkshopCore;
 import com.syszee.workshopcore.core.WorkshopCoreClient;
 import net.minecraft.client.Minecraft;
@@ -13,6 +12,7 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
+import org.joml.Matrix4f;
 import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -68,7 +68,6 @@ public final class GuiMixin {
 				fillGradient(matrix4f, bufferBuilder, x - 3, y - 3, x + k + 3, y - 3 + 1, 400, outlineStartColor, outlineStartColor);
 				fillGradient(matrix4f, bufferBuilder, x - 3, y + l + 2, x + k + 3, y + l + 3, 400, outlineEndColor, outlineEndColor);
 				RenderSystem.enableDepthTest();
-				RenderSystem.disableTexture();
 				RenderSystem.enableBlend();
 				RenderSystem.defaultBlendFunc();
 				BufferUploader.drawWithShader(bufferBuilder.end());
@@ -88,17 +87,16 @@ public final class GuiMixin {
 				BufferUploader.drawWithShader(bufferBuilder.end());
 
 				RenderSystem.disableBlend();
-				RenderSystem.enableTexture();
 
 				poseStack.pushPose();
 				poseStack.translate(0.0D, 0.0D, 400.0D);
 				matrix4f = poseStack.last().pose();
 				MultiBufferSource.BufferSource bufferSource = MultiBufferSource.immediate(Tesselator.getInstance().getBuilder());
 				int textX = x + 18;
-				font.drawInBatch(title, textX, y, -1, true, matrix4f, bufferSource, false, 0, 15728880);
+				font.drawInBatch(title, textX, y, -1, true, matrix4f, bufferSource, Font.DisplayMode.NORMAL, 0, 15728880);
 				int currentY = y + 12;
 				for (var iterator = wrappedSplitDescription.iterator(); iterator.hasNext(); currentY += 9) {
-					font.drawInBatch(iterator.next(), textX, currentY, -1, true, matrix4f, bufferSource, false, 0, 15728880);
+					font.drawInBatch(iterator.next(), textX, currentY, -1, true, matrix4f, bufferSource, Font.DisplayMode.NORMAL, 0, 15728880);
 				}
 				bufferSource.endBatch();
 				poseStack.popPose();

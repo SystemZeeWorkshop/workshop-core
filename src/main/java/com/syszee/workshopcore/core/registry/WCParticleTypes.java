@@ -12,6 +12,7 @@ import net.minecraft.core.Registry;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleType;
 import net.minecraft.core.particles.SimpleParticleType;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 
 public final class WCParticleTypes {
@@ -19,7 +20,7 @@ public final class WCParticleTypes {
 	public static final SimpleParticleType CONFETTI = register("confetti", FabricParticleTypes.simple());
 
 	public static <P extends ParticleOptions, T extends ParticleType<P>> T register(String name, T type) {
-		return Registry.register(Registry.PARTICLE_TYPE, new ResourceLocation(WorkshopCore.MOD_ID, name), type);
+		return Registry.register(BuiltInRegistries.PARTICLE_TYPE, new ResourceLocation(WorkshopCore.MOD_ID, name), type);
 	}
 
 	public static void register() {}

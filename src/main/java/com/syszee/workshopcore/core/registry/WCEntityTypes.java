@@ -5,6 +5,7 @@ import com.syszee.workshopcore.common.entity.Coin;
 import com.syszee.workshopcore.core.WorkshopCore;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
 import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.*;
 
@@ -13,7 +14,7 @@ public class WCEntityTypes {
 	public static final EntityType<Body> BODY = register("body", FabricEntityTypeBuilder.create(MobCategory.MISC, Body::new).fireImmune().dimensions(EntityDimensions.scalable(1.0F, 1.0F)));
 
 	public static <T extends Entity> EntityType<T> register(String name, FabricEntityTypeBuilder<T> builder) {
-		return Registry.register(Registry.ENTITY_TYPE, new ResourceLocation(WorkshopCore.MOD_ID, name), builder.build());
+		return Registry.register(BuiltInRegistries.ENTITY_TYPE, new ResourceLocation(WorkshopCore.MOD_ID, name), builder.build());
 	}
 
 	public static void register() {}

@@ -3,8 +3,6 @@ package com.syszee.workshopcore.common.entity;
 import com.syszee.workshopcore.core.WCPlayer;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.protocol.Packet;
-import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -199,10 +197,5 @@ public class Coin extends Entity {
 
 	public void stopFlipping() {
 		this.entityData.set(FLIPPING_STATUS, (byte) Math.max(0, this.entityData.get(FLIPPING_STATUS) - 2));
-	}
-
-	@Override
-	public Packet<?> getAddEntityPacket() {
-		return new ClientboundAddEntityPacket(this);
 	}
 }

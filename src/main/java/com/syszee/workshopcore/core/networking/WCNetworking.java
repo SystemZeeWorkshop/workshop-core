@@ -10,6 +10,7 @@ import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.nbt.NbtOps;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.Packet;
@@ -26,7 +27,7 @@ public final class WCNetworking {
 
 	public static void client() {
 		ClientPlayNetworking.registerGlobalReceiver(ADD_SCREEN_SHAKE_SOURCES_CHANNEL, (client, handler, buf, responseSender) -> {
-			var screenShakeSources = buf.readWithCodec(ScreenShakeSource.NETWORK_CODEC);
+			var screenShakeSources = buf.readWithCodec(NbtOps.INSTANCE, ScreenShakeSource.NETWORK_CODEC);
 			client.execute(() -> {
 				for (ScreenShakeSource source : screenShakeSources) ScreenShaker.addSource(source);
 			});
@@ -54,7 +55,7 @@ public final class WCNetworking {
 
 	public static Packet<?> createS2CScreenShakePacket(ScreenShakeSource... sources) {
 		FriendlyByteBuf friendlyByteBuf = new FriendlyByteBuf(Unpooled.buffer());
-		friendlyByteBuf.writeWithCodec(ScreenShakeSource.NETWORK_CODEC, List.of(sources));
+		friendlyByteBuf.writeWithCodec(NbtOps.INSTANCE, ScreenShakeSource.NETWORK_CODEC, List.of(sources));
 		return ServerPlayNetworking.createS2CPacket(ADD_SCREEN_SHAKE_SOURCES_CHANNEL, friendlyByteBuf);
 	}
 

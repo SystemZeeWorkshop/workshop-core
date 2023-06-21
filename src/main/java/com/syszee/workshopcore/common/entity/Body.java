@@ -7,12 +7,10 @@ import io.netty.buffer.Unpooled;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.multiplayer.ClientLevel;
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.protocol.Packet;
-import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.world.entity.Entity;
@@ -41,7 +39,7 @@ public class Body extends Entity {
 	private Body(LivingEntity entity) {
 		super(WCEntityTypes.BODY, entity.level);
 		this.setPos(entity.position());
-		this.setBodyEntityData(new LossyEntityCloningData(Registry.ENTITY_TYPE.getId(entity.getType()), entity.getUUID(), entity.hasCustomName() || entity instanceof Player ? entity.getName() : Component.empty(), entity.yHeadRot, entity.yBodyRot, entity.getEntityData().getAll()));
+		this.setBodyEntityData(new LossyEntityCloningData(entity.level.registryAccess().registryOrThrow(Registries.ENTITY_TYPE).getId(entity.getType()), entity.getUUID(), entity.hasCustomName() || entity instanceof Player ? entity.getName() : Component.empty(), entity.yHeadRot, entity.yBodyRot, entity.getEntityData().getNonDefaultValues()));
 	}
 
 	public static Body of(LivingEntity entity) {
@@ -96,11 +94,6 @@ public class Body extends Entity {
 		FriendlyByteBuf friendlyByteBuf = new FriendlyByteBuf(Unpooled.buffer());
 		WCEntityDataSerializers.LOSSY_ENTITY_CLONING_DATA_SERIALIZER.write(friendlyByteBuf, this.getBodyEntityData());
 		compoundTag.putByteArray("BodyData", friendlyByteBuf.array());
-	}
-
-	@Override
-	public Packet<?> getAddEntityPacket() {
-		return new ClientboundAddEntityPacket(this);
 	}
 
 	@Override

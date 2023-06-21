@@ -3,7 +3,7 @@
   "id": "workshop_core",
   "version": "${version}",
   "name": "Workshop Core",
-  "description": "The Best Minecraft Idea Wins!",
+  "description": "Collection of code and features for System Zee Videos.",
   "authors": ["SystemZee", "SmellyModder"],
   "contact": {
     "homepage": "?",
@@ -25,7 +25,7 @@
   ],
   "accessWidener": "workshop_core.accesswidener",
   "depends": {
-    "fabricloader": ">=0.14.10",
+    "fabricloader": ">=0.14.19",
     "fabric-api": "*",
     "minecraft": "~1.19",
     "java": ">=17"

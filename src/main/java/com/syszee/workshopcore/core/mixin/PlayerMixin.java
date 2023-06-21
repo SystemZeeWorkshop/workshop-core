@@ -16,7 +16,6 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import org.spongepowered.asm.mixin.Mixin;
@@ -48,7 +47,7 @@ public abstract class PlayerMixin extends LivingEntity implements WCPlayer {
 		this.oldSwell = this.swell;
 		if (this.entityData.get(IS_SWELLING)) {
 			if (++this.swell >= 30 && !this.level.isClientSide) {
-				Explosion.BlockInteraction blockInteraction = this.level.getGameRules().getBoolean(WCGameRules.RULE_SWELL_GRIEFING) ? Explosion.BlockInteraction.DESTROY : Explosion.BlockInteraction.NONE;
+				Level.ExplosionInteraction blockInteraction = this.level.getGameRules().getBoolean(WCGameRules.RULE_SWELL_GRIEFING) ? Level.ExplosionInteraction.MOB : Level.ExplosionInteraction.NONE;
 				this.level.explode(this, this.getX(), this.getY(), this.getZ(), 3.0F, blockInteraction);
 				this.kill();
 				this.entityData.set(IS_SWELLING, false);

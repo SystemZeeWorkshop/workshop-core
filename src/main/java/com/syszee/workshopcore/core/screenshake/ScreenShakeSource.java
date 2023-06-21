@@ -2,8 +2,8 @@ package com.syszee.workshopcore.core.screenshake;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import com.syszee.workshopcore.core.math.Vector2f;
 import net.minecraft.client.Camera;
+import org.joml.Vector2f;
 
 import java.util.List;
 import java.util.function.Function;

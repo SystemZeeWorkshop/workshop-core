@@ -2,9 +2,9 @@ package com.syszee.workshopcore.core.screenshake.distribution;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import com.syszee.workshopcore.core.math.Vector2f;
 import net.minecraft.client.Camera;
 import net.minecraft.util.Mth;
+import org.joml.Vector2f;
 
 public record IrregularWaveShakeDistributor(float strongFrequency, float firstMinorFrequency, float secondMinorFrequency, int xShift, int yShift) implements ShakeDistributor {
 	public static final Codec<IrregularWaveShakeDistributor> CODEC = RecordCodecBuilder.create(instance -> {

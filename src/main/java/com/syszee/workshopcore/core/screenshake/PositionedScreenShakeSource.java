@@ -1,22 +1,22 @@
 package com.syszee.workshopcore.core.screenshake;
 
-import com.mojang.math.Vector3f;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import com.syszee.workshopcore.core.math.Vector2f;
 import com.syszee.workshopcore.core.screenshake.distribution.ShakeDistributor;
 import net.minecraft.client.Camera;
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
+import org.joml.Vector2f;
+import org.joml.Vector3f;
 
 public class PositionedScreenShakeSource extends DecayingScreenShakeSource {
 	public static final Codec<PositionedScreenShakeSource> CODEC = RecordCodecBuilder.create(instance -> {
 		return instance.group(
 				ShakeDistributor.CODEC.fieldOf("distributor").forGetter(source -> source.shakeDistributor),
-				ResourceKey.codec(Registry.DIMENSION_REGISTRY).fieldOf("dimension").forGetter(source -> source.dimension),
+				ResourceKey.codec(Registries.DIMENSION).fieldOf("dimension").forGetter(source -> source.dimension),
 				Vec3.CODEC.fieldOf("position").forGetter(source -> new Vec3(source.x, source.y, source.z)),
 				Codec.DOUBLE.fieldOf("falloff_distance").forGetter(source -> source.falloffDistance),
 				Codec.DOUBLE.fieldOf("max_distance").forGetter(source -> source.maxDistance),

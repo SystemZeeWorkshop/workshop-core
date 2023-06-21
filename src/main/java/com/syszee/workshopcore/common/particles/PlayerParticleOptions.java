@@ -6,9 +6,9 @@ import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.syszee.workshopcore.core.WorkshopCore;
 import com.syszee.workshopcore.core.registry.WCParticleTypes;
 import net.minecraft.commands.arguments.GameProfileArgument;
-import net.minecraft.core.Registry;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleType;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.level.block.entity.SkullBlockEntity;
 import org.jetbrains.annotations.Nullable;
@@ -63,7 +63,7 @@ public class PlayerParticleOptions implements ParticleOptions {
 
 	@Override
 	public String writeToString() {
-		return Registry.PARTICLE_TYPE.getKey(this.getType()) + " " + "{" +
+		return BuiltInRegistries.PARTICLE_TYPE.getKey(this.getType()) + " " + "{" +
 				"profile=" + this.profile +
 				", faceOnly=" + this.faceOnly +
 				'}';

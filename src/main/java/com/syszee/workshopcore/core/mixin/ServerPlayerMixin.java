@@ -5,15 +5,12 @@ import com.syszee.workshopcore.core.WCPlayer;
 import com.syszee.workshopcore.core.WCServerPlayer;
 import com.syszee.workshopcore.core.registry.WCGameRules;
 import com.syszee.workshopcore.core.registry.WCParticleTypes;
-import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.player.ProfilePublicKey;
-import net.minecraft.world.level.Level;
-import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -23,8 +20,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public abstract class ServerPlayerMixin extends Player implements WCServerPlayer {
 	private boolean explosivePunchEnabled;
 
-	private ServerPlayerMixin(Level level, BlockPos blockPos, float f, GameProfile gameProfile, @Nullable ProfilePublicKey profilePublicKey) {
-		super(level, blockPos, f, gameProfile, profilePublicKey);
+	private ServerPlayerMixin(MinecraftServer minecraftServer, ServerLevel serverLevel, GameProfile gameProfile) {
+		super(serverLevel, serverLevel.getSharedSpawnPos(), serverLevel.getSharedSpawnAngle(), gameProfile);
 	}
 
 	@Inject(method = "restoreFrom", at = @At("RETURN"))
